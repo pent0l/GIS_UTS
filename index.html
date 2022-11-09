@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        html {
+            height: 100%
+        }
+
+        body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        #map {
+            height: 100%
+        }
+    </style>
+    <!-- <link rel="shortcut icon" type="image/x-icon" href="docs/images/favicon.ico" /> -->
+    <link rel="stylesheet" type="text/css" href="assets/leaflet/leaflet.css">
+    <script type="text/javascript" src="assets/leaflet/leaflet.js"></script>
+    <!-- <script type="text/javascript" src="assets/kecamatan/loteng.js"></script> -->
+    <!-- kecamatan -->
+    <script type="text/javascript" src="assets/kecamatan/batukliang.js"></script>
+    <script type="text/javascript" src="assets/kecamatan/batukliang_utara.js"></script>
+    <script type="text/javascript" src="assets/kecamatan/janapria.js"></script>
+    <script type="text/javascript" src="assets/kecamatan/jonggat.js"></script>
+    <script type="text/javascript" src="assets/kecamatan/kopang.js"></script>
+    <script type="text/javascript" src="assets/kecamatan/praya.js"></script>
+    <script type="text/javascript" src="assets/kecamatan/praya_barat.js"></script>
+    <script type="text/javascript" src="assets/kecamatan/praya_barat_daya.js"></script>
+    <script type="text/javascript" src="assets/kecamatan/praya_tengah.js"></script>
+    <script type="text/javascript" src="assets/kecamatan/praya_timur.js"></script>
+    <script type="text/javascript" src="assets/kecamatan/pringgarata.js"></script>
+    <script type="text/javascript" src="assets/kecamatan/pujut.js"></script>
+    <script type="text/javascript" src="assets/kecamatan/jalan.js"></script>
+    <title>TUGAS UTS</title>
+</head>
+
+<body>
+    <div id='map'></div>
+    <script>
+        const kota = L.layerGroup();
+        var satu = L.marker([-8.6128812, 116.3103311]).bindPopup('<b>Kantor Camat Batukliang.').addTo(kota);
+    var dua = L.marker([-8.588949, 116.3245473]).bindPopup('<b>Kantor Camat Batukliang Utara.').addTo(kota);
+    var tiga = L.marker([-8.6942821, 116.3995881]).bindPopup('Kantor Camat Janapria.').addTo(kota);
+    var empat = L.marker([-8.6525193, 116.1979991]).bindPopup('<b>Kantor Camat Jonggat.').addTo(kota);
+    var lima = L.marker([-8.6343426, 116.3548378]).bindPopup('<b>Kantor Camat Kopang.').addTo(kota);
+    var enam = L.marker([-8.7237617, 116.2390471]).bindPopup('Kantor Camat Praya.').addTo(kota);
+    var tujuh = L.marker([-8.742301, 116.2410837]).bindPopup('<b>Kantor Camat Praya Barat.').addTo(kota);
+    var delapan = L.marker([-8.7385415, 116.2015728]).bindPopup('<b>Kantor Camat Praya Barat Daya.').addTo(kota);
+    var sembilan = L.marker([-8.7340447, 116.316331]).bindPopup('Kantor Camat Praya Tengah.').addTo(kota);
+    var sepuluh = L.marker([-8.7614541, 116.3561055]).bindPopup('<b>Kantor Camat Praya Timur.').addTo(kota);
+    var sebelas = L.marker([-8.6190565, 116.2517066]).bindPopup('<b>Kantor Camat Pringgarata.').addTo(kota);
+    var duabelas = L.marker([-8.8004563, 116.292598]).bindPopup('Kantor Camat Pujut.').addTo(kota);
+
+    const mbAttr = 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>';
+        const mbUrl = 'https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw';
+
+        const streets = L.tileLayer(mbUrl, { id: 'mapbox/streets-v11', tileSize: 512, zoomOffset: -1, attribution: mbAttr });
+
+        const osm = L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+        });
+
+         var m = L.map('map').setView([-8.6475616, 116.2994149], 11);
+            var mopt = {
+                url: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+                options: { attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>' }
+            };
+            var mq = L.tileLayer(mopt.url, mopt.options);
+            mq.addTo(m);
+
+            function popUp(f, l) {
+                    var out = [];
+                    if (f.properties) {
+                        for (key in f.properties) {
+                            out.push(key + ": " + f.properties[key]);
+                        }
+                        l.bindPopup(out.join("<br />"));
+                    }
+                }
+
+            L.geoJSON([batukliang], {
+                style: function (feature) {
+                    return feature.properties && feature.properties.style;
+                }
+            }).addTo(m);
+
+
+            L.geoJSON([batukliang_utara], {
+                style: function (feature) {
+                    return feature.properties && feature.properties.style;
+                }
+            }).addTo(m);
+
+            L.geoJSON([janapria], {
+                    style: function (feature) {
+                        return feature.properties && feature.properties.style;
+                    }
+                }).addTo(m);
+
+                 L.geoJSON([jonggat], {
+                        style: function (feature) {
+                            return feature.properties && feature.properties.style;
+                        }
+                    }).addTo(m);
+
+                    L.geoJSON([kopang], {
+                            style: function (feature) {
+                                return feature.properties && feature.properties.style;
+                            }
+                        }).addTo(m);
+
+                         L.geoJSON([praya], {
+                                style: function (feature) {
+                                    return feature.properties && feature.properties.style;
+                                }
+                            }).addTo(m);
+
+                             L.geoJSON([praya_barat], {
+                                    style: function (feature) {
+                                        return feature.properties && feature.properties.style;
+                                    }
+                                }).addTo(m);
+
+                                 L.geoJSON([praya_barat_daya], {
+                                        style: function (feature) {
+                                            return feature.properties && feature.properties.style;
+                                        }
+                                    }).addTo(m);
+
+                                    L.geoJSON([praya_tengah], {
+                                            style: function (feature) {
+                                                return feature.properties && feature.properties.style;
+                                            }
+                                        }).addTo(m);
+
+                                         L.geoJSON([praya_timur], {
+                                                style: function (feature) {
+                                                    return feature.properties && feature.properties.style;
+                                                }
+                                            }).addTo(m);
+
+                                             L.geoJSON([pringgarata], {
+                                                    style: function (feature) {
+                                                        return feature.properties && feature.properties.style;
+                                                    }
+                                                }).addTo(m);
+
+                                                 L.geoJSON([pujut], {
+                                                        style: function (feature) {
+                                                            return feature.properties && feature.properties.style;
+                                                        }
+                                                    }).addTo(m);
+
+                        
+
+
+        const baseLayers = {
+            'OpenStreetMap': osm,
+            'Streets': streets
+        };
+
+        const overlays = {
+            'Cities': kota
+        };
+
+        const layerControl = L.control.layers(baseLayers, overlays).addTo(m);
+         const LeafIcon = L.Icon.extend({
+                options: {
+                    iconSize: [38, 50],
+                    shadowSize: [50, 64],
+                    iconAnchor: [22, 94],
+                    shadowAnchor: [4, 62],
+                    popupAnchor: [-3, -76]
+                }
+            });
+            const greenIcon = new LeafIcon({ iconUrl: 'assets/leaflet/images/ambulance.png' });
+            const redIcon = new LeafIcon({ iconUrl: 'assets/leaflet/images/polisi.png' });
+            const orangeIcon = new LeafIcon({ iconUrl: 'assets/leaflet/images/peme.png' });
+            const yelloIcon = new LeafIcon({ iconUrl: 'assets/leaflet/images/river.png' });
+            const hijau = new LeafIcon({ iconUrl: 'assets/leaflet/images/tree.png' });
+            // const merah = new LeafIcon({ iconUrl: 'assets/leaflet/images/gondola_2.png' });
+
+
+            //Kesehatan
+            const rsud_praya = L.marker([-8.7019832, 116.2958626], { icon: greenIcon }).bindPopup('RSUD Praya.');
+            const puskesams_praya = L.marker([-8.7060444, 116.2726082], { icon: greenIcon }).bindPopup('Puskesamas Praya.');
+            const kesehatan = L.layerGroup([rsud_praya, puskesams_praya]);
+
+            //Taman Bermain
+            const alun_alun = L.marker([-8.7045539, 116.2712998], { icon: hijau }).bindPopup('ALUN-ALUN TASTURA.');
+            const taman_biao = L.marker([-8.7139106, 116.2869397], { icon: hijau }).bindPopup('TAMAN BIAO.');
+            const tonjeng = L.marker([-8.7141343, 116.2639882], { icon: hijau }).bindPopup('Tonjeng Beru Semart Garden.');
+            const taman = L.layerGroup([alun_alun, taman_biao, tonjeng]);
+
+            //Pemerintahan
+            const bupati = L.marker([-8.7061917, 116.2691035], { icon: orangeIcon }).bindPopup('KANTOR BUPATI LOMBOK TENGAH.');
+            const Pemerintah = L.layerGroup([bupati]);
+
+            //Keamananan
+            const polres = L.marker([-8.7093713, 116.2793799], { icon: redIcon }).bindPopup('POLRES LOMBOK TENGAH.');
+            const keamanan = L.layerGroup([polres]);
+
+            //Waduk
+            const btj = L.marker([-8.7320897, 116.2726254], { icon: yelloIcon }).bindPopup('BENDUNGAN BATU JAI.');
+            const pengge = L.marker([-8.7575494, 116.1880415], { icon: yelloIcon }).bindPopup('BENDUNGAN PENGGE.');
+            const waduk = L.layerGroup([btj, pengge]);
+
+         const satellite = L.tileLayer(mbUrl, { id: 'mapbox/satellite-v9', tileSize: 512, zoomOffset: -1, attribution: mbAttr });
+            layerControl.addBaseLayer(satellite, 'Satellite');
+            layerControl.addOverlay(kesehatan, 'Kesehatan');
+            layerControl.addOverlay(taman, 'Taman');
+            layerControl.addOverlay(Pemerintah, 'Kantor Pemerintah');
+            layerControl.addOverlay(keamanan, 'Keamanan');
+            layerControl.addOverlay(waduk, 'Waduk');
+
+    </script>
+</body>
+
+</html>
